@@ -8,8 +8,21 @@ export default function SubscribeForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    setEmail("")
-    alert("Email cadastrado com sucesso!")
+    const response = await fetch("api/subscribers", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+      headers: { "Content-Type": "application/json" }
+    }).then(res => res.json())
+
+    console.log(response)
+
+    if (response.created) {
+      setEmail("")
+      alert('Email cadastrado com sucesso!')
+    } else {
+      alert('Algo deu errado!')
+    }
+
   }
 
   return (
